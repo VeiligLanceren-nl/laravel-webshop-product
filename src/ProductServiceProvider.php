@@ -11,10 +11,12 @@ use VeiligLanceren\LaravelWebshopProduct\Repositories\Category\CategoryRepositor
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Services\Seo\ISlugConfigService;
 use VeiligLanceren\LaravelWebshopProduct\Repositories\Product\ProductImageRepository;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Services\Product\IProductService;
+use VeiligLanceren\LaravelWebshopProduct\Repositories\Product\ProductVariantRepository;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Services\Category\ICategoryService;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Repositories\Product\IProductRepository;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Repositories\Category\ICategoryRepository;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Repositories\Product\IProductImageRepository;
+use VeiligLanceren\LaravelWebshopProduct\Interfaces\Repositories\Product\IProductVariantRepository;
 
 class ProductServiceProvider extends ServiceProvider
 {
@@ -28,6 +30,7 @@ class ProductServiceProvider extends ServiceProvider
         $this->app->bind(IProductRepository::class, ProductRepository::class);
         $this->app->bind(ICategoryRepository::class, CategoryRepository::class);
         $this->app->bind(IProductImageRepository::class, ProductImageRepository::class);
+        $this->app->bind(IProductVariantRepository::class, ProductVariantRepository::class);
 
         $this->app->bind(IProductService::class, ProductService::class);
         $this->app->bind(ICategoryService::class, CategoryService::class);
