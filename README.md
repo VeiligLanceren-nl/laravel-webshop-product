@@ -62,7 +62,7 @@ $products = Product::all();
 $product = Product::create([
     'name' => 'Example Product',
     'price' => 99.99,
-    'sky' => 'example-product'
+    'sku' => 'example-product'
 ]);
 
 // Read
