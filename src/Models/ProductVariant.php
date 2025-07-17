@@ -2,11 +2,15 @@
 
 namespace VeiligLanceren\LaravelWebshopProduct\Models;
 
+use Database\Factories\ProductVariantFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ProductVariant extends Model
 {
+    use HasFactory;
+
     /**
      * @var string[]
      */
@@ -26,5 +30,13 @@ class ProductVariant extends Model
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+
+    /**
+     * @return ProductVariantFactory
+     */
+    protected static function newFactory(): ProductVariantFactory
+    {
+        return ProductVariantFactory::new();
     }
 }
