@@ -50,7 +50,7 @@ php artisan migrate
 Use the provided `Product` model directly or extend it:
 
 ```php
-use VeiligLancerenNl\LaravelWebshopProduct\Models\Product;
+use VeiligLanceren\LaravelWebshopProduct\Models\Product;
 
 $products = Product::all();
 ```
