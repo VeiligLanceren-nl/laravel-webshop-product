@@ -21,12 +21,13 @@ beforeEach(function () {
     Schema::create('categoryable_test_models', function ($table) {
         $table->id();
     });
-});
 
-afterEach(function () {
-    Schema::drop('categoryables');
-    Schema::drop('categories');
-    Schema::drop('categoryable_test_models');
+    $this->model = CategoryableTestModel::create();
+
+    $this->cat1 = Category::create(['name' => 'Cat 1', 'slug' => 'cat-1']);
+    $this->cat2 = Category::create(['name' => 'Cat 2', 'slug' => 'cat-2']);
+
+    $this->model->attachCategories([$this->cat1->id, $this->cat2->id]);
 });
 
 it('can attach categories', function () {
@@ -63,16 +64,22 @@ it('can sync categories', function () {
     expect($model->categories()->pluck('id'))->not->toContain($cat1->id);
 });
 
-it('can check category by id, slug, and model', function () {
-    $model = CategoryableTestModel::create();
-    $cat1 = Category::create(['name' => 'Cat 1', 'slug' => 'cat-1']);
-    $cat2 = Category::create(['name' => 'Cat 2', 'slug' => 'cat-2']);
+it('can check category by id', function () {
+    expect($this->model->hasCategory($this->cat1->id))->toBeTrue();
+});
 
-    $model->attachCategories([$cat1->id, $cat2->id]);
+it('can check category by model instance', function () {
+    expect($this->model->hasCategory($this->cat1))->toBeTrue();
+});
 
-    expect($model->hasCategory($cat1->id))->toBeTrue();
-    expect($model->hasCategory($cat1))->toBeTrue();
-    expect($model->hasCategory('cat-1'))->toBeTrue();
-    expect($model->hasCategory('cat-nonexistent'))->toBeFalse();
-    expect($model->hasCategory(999))->toBeFalse();
+it('can check category by slug', function () {
+    expect($this->model->hasCategory('cat-1'))->toBeTrue();
+});
+
+it('returns false for unknown slug', function () {
+    expect($this->model->hasCategory('cat-nonexistent'))->toBeFalse();
+});
+
+it('returns false for unknown id', function () {
+    expect($this->model->hasCategory(999))->toBeFalse();
 });

@@ -28,6 +28,13 @@ class ProductImage extends Model
     ];
 
     /**
+     * @var string[]
+     */
+    protected $casts = [
+        'is_primary' => 'boolean',
+    ];
+
+    /**
      * @return BelongsTo
      */
     public function product(): BelongsTo
