@@ -33,4 +33,25 @@ class TestCase extends BaseTestCase
     {
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
     }
+
+    /**
+     * @param $app
+     * @return void
+     */
+    protected function defineEnvironment($app): void
+    {
+        $app['config']->set('filesystems.default', 'public');
+        $app['config']->set('filesystems.disks.public', [
+            'driver' => 'local',
+            'root' => storage_path('app/public'),
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'public',
+        ]);
+        $app['config']->set('database.default', 'testing');
+        $app['config']->set('database.connections.testing', [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+        ]);
+    }
 }
