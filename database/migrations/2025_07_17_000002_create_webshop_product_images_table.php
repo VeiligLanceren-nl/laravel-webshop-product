@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('webshop_product_images', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')
+            $table->foreignId('webshop_product_id')
                 ->constrained()
                 ->cascadeOnDelete();
             $table->string('url');
@@ -25,6 +25,6 @@ return new class extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('product_images');
+        Schema::dropIfExists('webshop_product_images');
     }
 };
