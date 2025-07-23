@@ -75,6 +75,57 @@ class WebshopProduct extends Model
     }
 
     /**
+     * @return float|null
+     */
+    public function getLengthAttribute(): ?float
+    {
+        return $this->dimensions['length'] ?? null;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getWidthAttribute(): ?float
+    {
+        return $this->dimensions['width'] ?? null;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getHeightAttribute(): ?float
+    {
+        return $this->dimensions['height'] ?? null;
+    }
+
+    /**
+     * @param $value
+     * @return void
+     */
+    public function setLengthAttribute($value): void
+    {
+        $this->dimensions = array_merge($this->dimensions ?? [], ['length' => (float) $value]);
+    }
+
+    /**
+     * @param $value
+     * @return void
+     */
+    public function setWidthAttribute($value): void
+    {
+        $this->dimensions = array_merge($this->dimensions ?? [], ['width' => (float) $value]);
+    }
+
+    /**
+     * @param $value
+     * @return void
+     */
+    public function setHeightAttribute($value): void
+    {
+        $this->dimensions = array_merge($this->dimensions ?? [], ['height' => (float) $value]);
+    }
+
+    /**
      * @return SlugOptions
      */
     public function getSlugOptions(): SlugOptions
