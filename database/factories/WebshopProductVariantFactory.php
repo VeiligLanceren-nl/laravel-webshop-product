@@ -21,7 +21,7 @@ class WebshopProductVariantFactory extends Factory
     {
         return [
             'name' => $this->faker->word(),
-            'product_id' => WebshopProduct::factory(),
+            'webshop_product_id' => WebshopProduct::factory(),
             'sku' => Str::random(),
             'price' => $this->faker->randomFloat(2, 10),
             'stock' => $this->faker->randomNumber(2),
