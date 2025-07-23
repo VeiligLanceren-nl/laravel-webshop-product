@@ -60,7 +60,7 @@ class ProductServiceProvider extends ServiceProvider
         }
 
         if (is_dir(__DIR__ . '/../resources/views')) {
-            Blade::anonymousComponentNamespace(__DIR__.'/../resources/views/components', 'webshop-product');
+            $this->loadViewsFrom(__DIR__ . '/../resources/views', 'webshop-product');
         }
 
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'webshop-product');
