@@ -80,7 +80,7 @@ class ProductImageService implements IProductImageService
     protected function unsetPrimaryImages(int $productId, ?int $exceptId = null): void
     {
         $images = $this->repository->all()
-            ->where('product_id', $productId)
+            ->where('webshop_product_id', $productId)
             ->when($exceptId, fn ($collection) => $collection->where('id', '!=', $exceptId));
 
         foreach ($images as $img) {
