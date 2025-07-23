@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use VeiligLanceren\LaravelWebshopProduct\Models\Product;
+use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProduct;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Services\Product\IProductService;
 
 uses(RefreshDatabase::class);
@@ -18,12 +18,12 @@ it('can create a product through the service', function () {
         'price' => 19.95,
     ]);
 
-    expect($product)->toBeInstanceOf(Product::class)
+    expect($product)->toBeInstanceOf(WebshopProduct::class)
         ->and($product->sku)->toBe('PROD-001');
 });
 
 it('can retrieve all products through the service', function () {
-    Product::factory()->count(5)->create();
+    WebshopProduct::factory()->count(5)->create();
 
     $products = $this->service->all();
 
@@ -31,7 +31,7 @@ it('can retrieve all products through the service', function () {
 });
 
 it('can find a product by id through the service', function () {
-    $product = Product::factory()->create();
+    $product = WebshopProduct::factory()->create();
 
     $found = $this->service->find($product->id);
 
@@ -40,7 +40,7 @@ it('can find a product by id through the service', function () {
 });
 
 it('can update a product through the service', function () {
-    $product = Product::factory()->create(['name' => 'Old']);
+    $product = WebshopProduct::factory()->create(['name' => 'Old']);
 
     $updated = $this->service->update($product, ['name' => 'New']);
 
@@ -48,10 +48,10 @@ it('can update a product through the service', function () {
 });
 
 it('can delete a product through the service', function () {
-    $product = Product::factory()->create();
+    $product = WebshopProduct::factory()->create();
 
     $deleted = $this->service->delete($product);
 
     expect($deleted)->toBeTrue()
-        ->and(Product::find($product->id))->toBeNull();
+        ->and(WebshopProduct::find($product->id))->toBeNull();
 });

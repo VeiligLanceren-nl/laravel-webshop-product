@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('product_variants', function (Blueprint $table) {
+        Schema::create('webshop_product_variants', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')
                 ->constrained()

@@ -1,7 +1,7 @@
 {
     "name": "veiliglanceren/laravel-webshop-product",
     "description": "Collection of resources for implementing a product structure in Laravel e-commerce projects",
-    "version": "0.0.2",
+    "version": "1.0.0",
     "type": "library",
     "license": "MIT",
     "require": {
@@ -9,7 +9,8 @@
         "laravel/framework": "^10.0|^11.0|^12.0",
         "ext-dom": "*",
         "ext-simplexml": "*",
-        "spatie/laravel-sluggable": "^3.7"
+        "spatie/laravel-sluggable": "^2.0|^3.0",
+        "veiliglanceren/laravel-morph-categories": "^2.0"
     },
     "require-dev": {
         "orchestra/testbench": "^8.0 || ^9.0 || ^10.0",

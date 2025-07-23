@@ -4,7 +4,7 @@ namespace VeiligLanceren\LaravelWebshopProduct\Interfaces\Repositories\Category;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
-use VeiligLanceren\LaravelWebshopProduct\Models\Category;
+use VeiligLanceren\LaravelMorphCategories\Models\MorphCategory;
 
 interface ICategoryRepository
 {
@@ -15,15 +15,15 @@ interface ICategoryRepository
 
     /**
      * @param int $id
-     * @return Category|null
+     * @return MorphCategory|null
      */
-    public function find(int $id): ?Category;
+    public function find(int $id): ?MorphCategory;
 
     /**
      * @param string $slug
-     * @return Category|null
+     * @return MorphCategory|null
      */
-    public function findBySlug(string $slug): ?Category;
+    public function findBySlug(string $slug): ?MorphCategory;
 
     /**
      * @param Model $model
@@ -48,20 +48,20 @@ interface ICategoryRepository
 
     /**
      * @param array $attributes
-     * @return Category
+     * @return MorphCategory
      */
-    public function create(array $attributes): Category;
+    public function create(array $attributes): MorphCategory;
 
     /**
-     * @param Category $category
+     * @param MorphCategory $category
      * @param array $attributes
-     * @return Category
+     * @return MorphCategory
      */
-    public function update(Category $category, array $attributes): Category;
+    public function update(MorphCategory $category, array $attributes): MorphCategory;
 
     /**
-     * @param Category $category
+     * @param MorphCategory $category
      * @return void
      */
-    public function delete(Category $category): void;
+    public function delete(MorphCategory $category): void;
 }

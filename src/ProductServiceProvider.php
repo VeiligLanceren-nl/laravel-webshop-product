@@ -2,6 +2,7 @@
 
 namespace VeiligLanceren\LaravelWebshopProduct;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use VeiligLanceren\LaravelWebshopProduct\Services\Seo\SlugConfigService;
 use VeiligLanceren\LaravelWebshopProduct\Services\Product\ProductService;
@@ -29,7 +30,7 @@ class ProductServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/product.php', 'product');
+        $this->mergeConfigFrom(__DIR__ . '/../config/webshop-product.php', 'webshop-product');
 
         $this->app->bind(IProductRepository::class, ProductRepository::class);
         $this->app->bind(ICategoryRepository::class, CategoryRepository::class);
@@ -51,16 +52,21 @@ class ProductServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->publishes([
-            __DIR__ . '/../config/product.php' => config_path('product.php'),
-        ], 'product-config');
+            __DIR__ . '/../config/webshop-product.php' => config_path('webshop-product.php'),
+        ], 'webshop-product-config');
 
         if (is_dir(__DIR__ . '/../database/migrations')) {
             $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         }
 
         if (is_dir(__DIR__ . '/../resources/views')) {
-            $this->loadViewsFrom(__DIR__ . '/../resources/views', 'product');
+            Blade::anonymousComponentNamespace(__DIR__.'/../resources/views/components', 'webshop-product');
         }
+
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'webshop-product');
+        $this->publishes([
+            __DIR__.'/../resources/lang' => resource_path('lang/vendor/webshop-product'),
+        ], 'webshop-product-translations');
 
         if ($this->app->runningInConsole()) {
             $this->loadFactoriesFrom(__DIR__ . '/../Database/Factories');

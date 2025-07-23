@@ -5,6 +5,7 @@ namespace Tests;
 use Illuminate\Support\InteractsWithTime;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use VeiligLanceren\LaravelWebshopProduct\ProductServiceProvider;
+use VeiligLanceren\LaravelMorphCategories\MorphCategoryServiceProvider;
 
 class TestCase extends BaseTestCase
 {
@@ -23,6 +24,7 @@ class TestCase extends BaseTestCase
     {
         return [
             ProductServiceProvider::class,
+            MorphCategoryServiceProvider::class,
         ];
     }
 
@@ -32,6 +34,7 @@ class TestCase extends BaseTestCase
     protected function defineDatabaseMigrations(): void
     {
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../vendor/veiliglanceren/laravel-morph-categories/database/migrations');
     }
 
     /**

@@ -3,7 +3,7 @@
 namespace VeiligLanceren\LaravelWebshopProduct\Services\Product;
 
 use Illuminate\Database\Eloquent\Collection;
-use VeiligLanceren\LaravelWebshopProduct\Models\ProductImage;
+use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProductImage;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Services\Product\IProductImageService;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Repositories\Product\IProductImageRepository;
 
@@ -30,7 +30,7 @@ class ProductImageService implements IProductImageService
     /**
      * @inheritDoc
      */
-    public function find(int $id): ?ProductImage
+    public function find(int $id): ?WebshopProductImage
     {
         return $this->repository->find($id);
     }
@@ -38,7 +38,7 @@ class ProductImageService implements IProductImageService
     /**
      * @inheritDoc
      */
-    public function create(array $data): ProductImage
+    public function create(array $data): WebshopProductImage
     {
         if (!empty($data['is_primary'])) {
             $this->unsetPrimaryImages($data['product_id']);
@@ -48,11 +48,11 @@ class ProductImageService implements IProductImageService
     }
 
     /**
-     * @param ProductImage $productImage
+     * @param WebshopProductImage $productImage
      * @param array $data
-     * @return ProductImage
+     * @return WebshopProductImage
      */
-    public function update(ProductImage $productImage, array $data): ProductImage
+    public function update(WebshopProductImage $productImage, array $data): WebshopProductImage
     {
         if (!empty($data['is_primary'])) {
             $this->unsetPrimaryImages($productImage->product_id, $productImage->id);
@@ -64,10 +64,10 @@ class ProductImageService implements IProductImageService
     }
 
     /**
-     * @param ProductImage $productImage
+     * @param WebshopProductImage $productImage
      * @return bool
      */
-    public function delete(ProductImage $productImage): bool
+    public function delete(WebshopProductImage $productImage): bool
     {
         return $this->repository->delete($productImage);
     }

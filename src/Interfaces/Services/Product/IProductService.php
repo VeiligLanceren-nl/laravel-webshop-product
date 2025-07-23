@@ -3,7 +3,7 @@
 namespace VeiligLanceren\LaravelWebshopProduct\Interfaces\Services\Product;
 
 use Illuminate\Database\Eloquent\Collection;
-use VeiligLanceren\LaravelWebshopProduct\Models\Product;
+use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProduct;
 
 interface IProductService
 {
@@ -14,26 +14,26 @@ interface IProductService
 
     /**
      * @param int $id
-     * @return Product|null
+     * @return WebshopProduct|null
      */
-    public function find(int $id): ?Product;
+    public function find(int $id): ?WebshopProduct;
 
     /**
      * @param array $data
-     * @return Product
+     * @return WebshopProduct
      */
-    public function create(array $data): Product;
+    public function create(array $data): WebshopProduct;
 
     /**
-     * @param Product $product
+     * @param WebshopProduct $product
      * @param array $data
-     * @return Product
+     * @return WebshopProduct
      */
-    public function update(Product $product, array $data): Product;
+    public function update(WebshopProduct $product, array $data): WebshopProduct;
 
     /**
-     * @param Product $product
+     * @param WebshopProduct $product
      * @return bool
      */
-    public function delete(Product $product): bool;
+    public function delete(WebshopProduct $product): bool;
 }

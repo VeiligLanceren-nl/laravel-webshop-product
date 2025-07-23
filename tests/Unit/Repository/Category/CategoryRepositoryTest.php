@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use VeiligLanceren\LaravelWebshopProduct\Models\Product;
-use VeiligLanceren\LaravelWebshopProduct\Models\Category;
+use VeiligLanceren\LaravelMorphCategories\Models\MorphCategory;
+use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProduct;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Repositories\Category\ICategoryRepository;
 
 uses(RefreshDatabase::class);
@@ -16,7 +16,7 @@ it('can create and retrieve a category', function () {
     ]);
 
     expect($category)
-        ->toBeInstanceOf(Category::class)
+        ->toBeInstanceOf(MorphCategory::class)
         ->and($category->name)
         ->toBe('Webhosting');
 
@@ -27,7 +27,7 @@ it('can create and retrieve a category', function () {
 it('can update a category', function () {
     $repo = app(ICategoryRepository::class);
 
-    $category = Category::factory()->create(['name' => 'Old Name']);
+    $category = MorphCategory::factory()->create(['name' => 'Old Name']);
 
     $updated = $repo->update($category, ['name' => 'New Name']);
 
@@ -37,8 +37,8 @@ it('can update a category', function () {
 it('can assign categories to a model', function () {
     $repo = app(ICategoryRepository::class);
 
-    $product = Product::factory()->create();
-    $categories = Category::factory()->count(2)->create();
+    $product = WebshopProduct::factory()->create();
+    $categories = MorphCategory::factory()->count(2)->create();
 
     $repo->assign($product, $categories->pluck('id')->toArray());
 
@@ -48,8 +48,8 @@ it('can assign categories to a model', function () {
 it('can detach categories from a model', function () {
     $repo = app(ICategoryRepository::class);
 
-    $product = Product::factory()->create();
-    $categories = Category::factory()->count(2)->create();
+    $product = WebshopProduct::factory()->create();
+    $categories = MorphCategory::factory()->count(2)->create();
 
     $repo->assign($product, $categories->pluck('id')->toArray());
     $repo->detach($product, $categories[0]->id);

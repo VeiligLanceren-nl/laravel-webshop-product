@@ -1,6 +1,6 @@
 <?php
 
-namespace VeiligLanceren\LaravelWebshopProduct\Support\Traits;
+namespace Tests\src\Support\Traits;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
