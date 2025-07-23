@@ -14,7 +14,7 @@ it('can create a product variant', function () {
     $product = WebshopProduct::factory()->create();
     $data = [
         'name' => 'Variant A',
-        'product_id' => $product->id,
+        'webshop_product_id' => $product->id,
         'price' => $product->price
     ];
 

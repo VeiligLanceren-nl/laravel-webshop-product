@@ -26,14 +26,14 @@
                         @endif
                     </li>
                     <li>/</li>
-                    @if($product->categories->isNotEmpty())
+                    @if($product->morphCategories->isNotEmpty())
                         <li>
                             @if($linkCategory)
-                                <a href="{{ route('category.show', $product->categories->first()->slug) }}" class="hover:text-primary">
-                                    {{ $product->categories->first()->name }}
+                                <a href="{{ route('category.show', $product->morphCategories->first()->slug) }}" class="hover:text-primary">
+                                    {{ $product->morphCategories->first()->name }}
                                 </a>
                             @else
-                                {{ $product->categories->first()->name }}
+                                {{ $product->morphCategories->first()->name }}
                             @endif
                         </li>
                         <li>/</li>
@@ -279,8 +279,8 @@
                             <div>
                                 <span class="font-medium text-gray-700">Category:</span>
                                 <span class="text-gray-600 ml-2">
-                                    @if($product->categories->isNotEmpty())
-                                        {{ $product->categories->first()->name }}
+                                    @if($product->morphCategories->isNotEmpty())
+                                        {{ $product->morphCategories->first()->name }}
                                     @else
                                         Uncategorized
                                     @endif

@@ -41,11 +41,11 @@
 
     {{-- Product Content --}}
     <div class="p-4">
-        @if($showCategory && $product->categories->isNotEmpty())
+        @if($showCategory && $product->morphCategories->isNotEmpty())
             <div class="mb-1">
-                <a href="{{ route('category.show', $product->categories->first()->slug) }}"
+                <a href="{{ route('category.show', $product->morphCategories->first()->slug) }}"
                    class="text-xs font-medium text-gray-500 hover:text-primary transition-colors">
-                    {{ $product->categories->first()->name }}
+                    {{ $product->morphCategories->first()->name }}
                 </a>
             </div>
         @endif

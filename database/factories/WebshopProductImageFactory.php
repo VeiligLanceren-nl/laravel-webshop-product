@@ -22,7 +22,7 @@ class WebshopProductImageFactory extends Factory
     public function definition(): array
     {
         return [
-            'product_id' => WebshopProduct::factory(),
+            'webshop_product_id' => WebshopProduct::factory(),
             'url' => $this->faker->imageUrl(),
             'alt_text' => $this->faker->words(3, true),
             'is_primary' => $this->faker->boolean(),

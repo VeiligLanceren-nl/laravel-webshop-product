@@ -4,14 +4,14 @@ namespace Database\Factories;
 
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use VeiligLanceren\LaravelWebshopProduct\Models\Category;
+use VeiligLanceren\LaravelMorphCategories\Models\MorphCategory;
 
 class WebshopCategoryFactory extends Factory
 {
     /**
      * @var string
      */
-    protected $model = Category::class;
+    protected $model = MorphCategory::class;
 
     /**
      * @return array
@@ -28,10 +28,10 @@ class WebshopCategoryFactory extends Factory
     }
 
     /**
-     * @param Category $parent
+     * @param MorphCategory $parent
      * @return $this
      */
-    public function withParent(Category $parent): static
+    public function withParent(MorphCategory $parent): static
     {
         return $this->state(fn () => ['parent_id' => $parent->id]);
     }
