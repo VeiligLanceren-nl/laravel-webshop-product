@@ -3,18 +3,18 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use VeiligLanceren\LaravelWebshopProduct\Models\ProductImage;
-use VeiligLanceren\LaravelWebshopProduct\Models\Product;
+use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProductImage;
+use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProduct;
 
 /**
- * @extends Factory<ProductImage>
+ * @extends Factory<WebshopProductImage>
  */
-class ProductImageFactory extends Factory
+class WebshopProductImageFactory extends Factory
 {
     /**
      * @var string
      */
-    protected $model = ProductImage::class;
+    protected $model = WebshopProductImage::class;
 
     /**
      * @return array
@@ -22,7 +22,7 @@ class ProductImageFactory extends Factory
     public function definition(): array
     {
         return [
-            'product_id' => Product::factory(),
+            'product_id' => WebshopProduct::factory(),
             'url' => $this->faker->imageUrl(),
             'alt_text' => $this->faker->words(3, true),
             'is_primary' => $this->faker->boolean(),

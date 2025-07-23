@@ -4,7 +4,7 @@ namespace VeiligLanceren\LaravelWebshopProduct\Repositories\Category;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
-use VeiligLanceren\LaravelWebshopProduct\Models\Category;
+use VeiligLanceren\LaravelMorphCategories\Models\Category;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Repositories\Category\ICategoryRepository;
 
 class CategoryRepository implements ICategoryRepository

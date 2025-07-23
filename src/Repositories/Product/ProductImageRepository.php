@@ -3,7 +3,7 @@
 namespace VeiligLanceren\LaravelWebshopProduct\Repositories\Product;
 
 use Illuminate\Support\Collection;
-use VeiligLanceren\LaravelWebshopProduct\Models\ProductImage;
+use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProductImage;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Repositories\Product\IProductImageRepository;
 
 class ProductImageRepository implements IProductImageRepository
@@ -13,29 +13,29 @@ class ProductImageRepository implements IProductImageRepository
      */
     public function all(): Collection
     {
-        return ProductImage::all();
+        return WebshopProductImage::all();
     }
 
     /**
      * @inheritDoc
      */
-    public function find(int $id): ?ProductImage
+    public function find(int $id): ?WebshopProductImage
     {
-        return ProductImage::query()->find($id);
+        return WebshopProductImage::query()->find($id);
     }
 
     /**
      * @inheritDoc
      */
-    public function create(array $data): ProductImage
+    public function create(array $data): WebshopProductImage
     {
-        return ProductImage::query()->create($data);
+        return WebshopProductImage::query()->create($data);
     }
 
     /**
      * @inheritDoc
      */
-    public function update(ProductImage $productImage, array $data): bool
+    public function update(WebshopProductImage $productImage, array $data): bool
     {
         return $productImage->update($data);
     }
@@ -43,7 +43,7 @@ class ProductImageRepository implements IProductImageRepository
     /**
      * @inheritDoc
      */
-    public function delete(ProductImage $productImage): bool
+    public function delete(WebshopProductImage $productImage): bool
     {
         return $productImage->delete();
     }

@@ -50,9 +50,9 @@ php artisan migrate
 Use the provided `Product` model directly or extend it:
 
 ```php
-use VeiligLanceren\LaravelWebshopProduct\Models\Product;
+use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProduct;
 
-$products = Product::all();
+$products = WebshopProduct::all();
 ```
 
 ### CRUD Example
@@ -60,7 +60,7 @@ $products = Product::all();
 ```php
 // Create
 $product = Product::create([
-    'name' => 'Example Product',
+    'name' => 'Example WebshopProduct',
     'price' => 99.99,
     'sku' => 'example-product'
 ]);

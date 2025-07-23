@@ -4,17 +4,17 @@ namespace VeiligLanceren\LaravelWebshopProduct\Models;
 
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Model;
+use Database\Factories\WebshopProductFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use VeiligLanceren\LaravelWebshopProduct\Facades\SlugConfig;
+use VeiligLanceren\LaravelMorphCategories\Support\Traits\HasCategory;
 
-class Product extends Model
+class WebshopProduct extends Model
 {
-    use SoftDeletes, HasSlug, HasFactory;
+    use SoftDeletes, HasSlug, HasFactory, HasCategory;
 
     /**
      * @var string[]
@@ -47,29 +47,21 @@ class Product extends Model
     ];
 
     /**
-     * @return HasMany<ProductVariant>
+     * @return HasMany<WebshopProductVariant>
      */
     public function variants(): HasMany
     {
-        return $this->hasMany(ProductVariant::class);
+        return $this->hasMany(WebshopProductVariant::class);
     }
 
     /**
-     * @return HasMany<ProductImage>
+     * @return HasMany<WebshopProductImage>
      */
     public function images(): HasMany
     {
         return $this
-            ->hasMany(ProductImage::class)
+            ->hasMany(WebshopProductImage::class)
             ->orderBy('order');
-    }
-
-    /**
-     * @return MorphToMany
-     */
-    public function categories(): MorphToMany
-    {
-        return $this->morphToMany(Category::class, 'categoryable');
     }
 
     /**
@@ -91,11 +83,11 @@ class Product extends Model
     }
 
     /**
-     * @return ProductFactory
+     * @return WebshopProductFactory
      */
-    protected static function newFactory(): ProductFactory
+    protected static function newFactory(): WebshopProductFactory
     {
-        return ProductFactory::new();
+        return WebshopProductFactory::new();
     }
 
     /**

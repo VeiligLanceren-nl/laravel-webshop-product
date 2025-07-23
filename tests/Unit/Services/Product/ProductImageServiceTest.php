@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use VeiligLanceren\LaravelWebshopProduct\Models\Product;
-use VeiligLanceren\LaravelWebshopProduct\Models\ProductImage;
+use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProduct;
+use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProductImage;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Services\Product\IProductImageService;
 
 
@@ -13,7 +13,7 @@ beforeEach(function () {
 });
 
 it('can create a product image', function () {
-    $product = Product::factory()->create();
+    $product = WebshopProduct::factory()->create();
 
     $image = $this->service->create([
         'product_id' => $product->id,
@@ -23,12 +23,12 @@ it('can create a product image', function () {
         'order' => 1,
     ]);
 
-    expect($image)->toBeInstanceOf(ProductImage::class)
+    expect($image)->toBeInstanceOf(WebshopProductImage::class)
         ->and($image->url)->toBe('images/sample.jpg');
 });
 
 it('can retrieve all product images', function () {
-    ProductImage::factory()->count(2)->create();
+    WebshopProductImage::factory()->count(2)->create();
 
     $result = $this->service->all();
 
@@ -36,7 +36,7 @@ it('can retrieve all product images', function () {
 });
 
 it('can find a product image by id', function () {
-    $image = ProductImage::factory()->create();
+    $image = WebshopProductImage::factory()->create();
 
     $found = $this->service->find($image->id);
 
@@ -45,7 +45,7 @@ it('can find a product image by id', function () {
 });
 
 it('can update a product image', function () {
-    $image = ProductImage::factory()->create([
+    $image = WebshopProductImage::factory()->create([
         'url' => 'old.jpg',
     ]);
 
@@ -55,18 +55,18 @@ it('can update a product image', function () {
 });
 
 it('can delete a product image', function () {
-    $image = ProductImage::factory()->create();
+    $image = WebshopProductImage::factory()->create();
 
     $result = $this->service->delete($image);
 
     expect($result)->toBeTrue()
-        ->and(ProductImage::find($image->id))->toBeNull();
+        ->and(WebshopProductImage::find($image->id))->toBeNull();
 });
 
 it('ensures only one primary image per product', function () {
-    $product = Product::factory()->create();
+    $product = WebshopProduct::factory()->create();
 
-    $primary1 = ProductImage::factory()->create([
+    $primary1 = WebshopProductImage::factory()->create([
         'product_id' => $product->id,
         'is_primary' => true,
     ]);
@@ -87,14 +87,14 @@ it('ensures only one primary image per product', function () {
 });
 
 it('updates primary image correctly when changed', function () {
-    $product = Product::factory()->create();
+    $product = WebshopProduct::factory()->create();
 
-    $primary1 = ProductImage::factory()->create([
+    $primary1 = WebshopProductImage::factory()->create([
         'product_id' => $product->id,
         'is_primary' => true,
     ]);
 
-    $primary2 = ProductImage::factory()->create([
+    $primary2 = WebshopProductImage::factory()->create([
         'product_id' => $product->id,
         'is_primary' => false,
     ]);

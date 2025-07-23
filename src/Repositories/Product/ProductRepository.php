@@ -3,7 +3,7 @@
 namespace VeiligLanceren\LaravelWebshopProduct\Repositories\Product;
 
 use Illuminate\Database\Eloquent\Collection;
-use VeiligLanceren\LaravelWebshopProduct\Models\Product;
+use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProduct;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Repositories\Product\IProductRepository;
 
 class ProductRepository implements IProductRepository
@@ -13,29 +13,29 @@ class ProductRepository implements IProductRepository
      */
     public function all(): Collection
     {
-        return Product::query()->get();
+        return WebshopProduct::query()->get();
     }
 
     /**
      * @inheritDoc
      */
-    public function find(int $id): ?Product
+    public function find(int $id): ?WebshopProduct
     {
-        return Product::query()->find($id);
+        return WebshopProduct::query()->find($id);
     }
 
     /**
      * @inheritDoc
      */
-    public function create(array $data): Product
+    public function create(array $data): WebshopProduct
     {
-        return Product::query()->create($data);
+        return WebshopProduct::query()->create($data);
     }
 
     /**
      * @inheritDoc
      */
-    public function update(Product $product, array $data): Product
+    public function update(WebshopProduct $product, array $data): WebshopProduct
     {
         $product->update($data);
 
@@ -45,7 +45,7 @@ class ProductRepository implements IProductRepository
     /**
      * @inheritDoc
      */
-    public function delete(Product $product): bool
+    public function delete(WebshopProduct $product): bool
     {
         return $product->delete();
     }

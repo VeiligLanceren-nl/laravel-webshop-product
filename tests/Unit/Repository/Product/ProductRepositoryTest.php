@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use VeiligLanceren\LaravelWebshopProduct\Models\Product;
+use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProduct;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Repositories\Product\IProductRepository;
 
 uses(RefreshDatabase::class);
@@ -18,12 +18,12 @@ it('can create a product', function () {
         'price' => 9.95,
     ]);
 
-    expect($product)->toBeInstanceOf(Product::class)
+    expect($product)->toBeInstanceOf(WebshopProduct::class)
         ->and($product->name)->toBe('Webhosting Plus');
 });
 
 it('can get all products', function () {
-    Product::factory()->count(3)->create();
+    WebshopProduct::factory()->count(3)->create();
 
     $products = $this->repository->all();
 
@@ -31,7 +31,7 @@ it('can get all products', function () {
 });
 
 it('can find a product by ID', function () {
-    $product = Product::factory()->create();
+    $product = WebshopProduct::factory()->create();
 
     $found = $this->repository->find($product->id);
 
@@ -40,7 +40,7 @@ it('can find a product by ID', function () {
 });
 
 it('can update a product', function () {
-    $product = Product::factory()->create(['name' => 'Old Name']);
+    $product = WebshopProduct::factory()->create(['name' => 'Old Name']);
 
     $updated = $this->repository->update($product, ['name' => 'New Name']);
 
@@ -48,10 +48,10 @@ it('can update a product', function () {
 });
 
 it('can delete a product', function () {
-    $product = Product::factory()->create();
+    $product = WebshopProduct::factory()->create();
 
     $result = $this->repository->delete($product);
 
     expect($result)->toBeTrue()
-        ->and(Product::find($product->id))->toBeNull();
+        ->and(WebshopProduct::find($product->id))->toBeNull();
 });

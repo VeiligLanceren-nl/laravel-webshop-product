@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use VeiligLanceren\LaravelWebshopProduct\Models\Product;
-use VeiligLanceren\LaravelWebshopProduct\Models\Category;
+use VeiligLanceren\LaravelMorphCategories\Models\Category;
+use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProduct;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Repositories\Category\ICategoryRepository;
 
 uses(RefreshDatabase::class);
@@ -37,7 +37,7 @@ it('can update a category', function () {
 it('can assign categories to a model', function () {
     $repo = app(ICategoryRepository::class);
 
-    $product = Product::factory()->create();
+    $product = WebshopProduct::factory()->create();
     $categories = Category::factory()->count(2)->create();
 
     $repo->assign($product, $categories->pluck('id')->toArray());
@@ -48,7 +48,7 @@ it('can assign categories to a model', function () {
 it('can detach categories from a model', function () {
     $repo = app(ICategoryRepository::class);
 
-    $product = Product::factory()->create();
+    $product = WebshopProduct::factory()->create();
     $categories = Category::factory()->count(2)->create();
 
     $repo->assign($product, $categories->pluck('id')->toArray());

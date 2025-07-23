@@ -4,14 +4,14 @@ namespace Database\Factories;
 
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use VeiligLanceren\LaravelWebshopProduct\Models\Product;
+use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProduct;
 
-class ProductFactory extends Factory
+class WebshopProductFactory extends Factory
 {
     /**
      * @var string
      */
-    protected $model = Product::class;
+    protected $model = WebshopProduct::class;
 
     /**
      * @return array

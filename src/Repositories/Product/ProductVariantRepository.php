@@ -3,7 +3,7 @@
 namespace VeiligLanceren\LaravelWebshopProduct\Repositories\Product;
 
 use Illuminate\Database\Eloquent\Collection;
-use VeiligLanceren\LaravelWebshopProduct\Models\ProductVariant;
+use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProductVariant;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Repositories\Product\IProductVariantRepository;
 
 class ProductVariantRepository implements IProductVariantRepository
@@ -13,29 +13,29 @@ class ProductVariantRepository implements IProductVariantRepository
      */
     public function all(): Collection
     {
-        return ProductVariant::all();
+        return WebshopProductVariant::all();
     }
 
     /**
      * @inheritDoc
      */
-    public function find($id): ProductVariant | null
+    public function find($id): WebshopProductVariant | null
     {
-        return ProductVariant::query()->find($id);
+        return WebshopProductVariant::query()->find($id);
     }
 
     /**
      * @inheritDoc
      */
-    public function create(array $data): ProductVariant
+    public function create(array $data): WebshopProductVariant
     {
-        return ProductVariant::create($data);
+        return WebshopProductVariant::create($data);
     }
 
     /**
      * @inheritDoc
      */
-    public function update($id, array $data): ProductVariant
+    public function update($id, array $data): WebshopProductVariant
     {
         $variant = $this->find($id);
 

@@ -30,7 +30,7 @@ it('generates default slug from "name"', function () {
         public $timestamps = false;
         protected $guarded = [];
 
-        public $name = 'Example Product';
+        public $name = 'Example WebshopProduct';
 
         public function getSlugOptions(): SlugOptions
         {
@@ -40,7 +40,7 @@ it('generates default slug from "name"', function () {
 
     $model->save();
 
-    expect($model->slug)->toBe('example-product');
+    expect($model->slug)->toBe('example-webshopproduct');
 });
 
 it('respects custom slug configuration', function () {

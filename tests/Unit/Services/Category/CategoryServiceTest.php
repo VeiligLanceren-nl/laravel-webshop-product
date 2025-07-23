@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use VeiligLanceren\LaravelWebshopProduct\Models\Category;
+use VeiligLanceren\LaravelMorphCategories\Models\Category;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Services\Category\ICategoryService;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Repositories\Category\ICategoryRepository;
 

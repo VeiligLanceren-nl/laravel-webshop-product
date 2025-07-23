@@ -3,7 +3,7 @@
 namespace VeiligLanceren\LaravelWebshopProduct\Services\Product;
 
 use Illuminate\Support\Collection;
-use VeiligLanceren\LaravelWebshopProduct\Models\ProductVariant;
+use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProductVariant;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Services\Product\IProductVariantService;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Repositories\Product\IProductVariantRepository;
 
@@ -29,18 +29,18 @@ class ProductVariantService implements IProductVariantService
 
     /**
      * @param int $id
-     * @return ProductVariant|null
+     * @return WebshopProductVariant|null
      */
-    public function find(int $id): ?ProductVariant
+    public function find(int $id): ?WebshopProductVariant
     {
         return $this->repository->find($id);
     }
 
     /**
      * @param array $data
-     * @return ProductVariant
+     * @return WebshopProductVariant
      */
-    public function create(array $data): ProductVariant
+    public function create(array $data): WebshopProductVariant
     {
         return $this->repository->create($data);
     }
@@ -48,9 +48,9 @@ class ProductVariantService implements IProductVariantService
     /**
      * @param int $id
      * @param array $data
-     * @return ProductVariant|null
+     * @return WebshopProductVariant|null
      */
-    public function update(int $id, array $data): ?ProductVariant
+    public function update(int $id, array $data): ?WebshopProductVariant
     {
         return $this->repository->update($id, $data);
     }

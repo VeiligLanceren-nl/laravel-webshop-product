@@ -3,7 +3,7 @@
 namespace VeiligLanceren\LaravelWebshopProduct\Interfaces\Services\Category;
 
 use Illuminate\Support\Collection;
-use VeiligLanceren\LaravelWebshopProduct\Models\Category;
+use VeiligLanceren\LaravelMorphCategories\Models\Category;
 
 interface ICategoryService
 {

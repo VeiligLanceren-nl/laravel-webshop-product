@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use VeiligLanceren\LaravelWebshopProduct\Models\Category;
-use VeiligLanceren\LaravelWebshopProduct\Support\Traits\HasCategory;
+use VeiligLanceren\LaravelMorphCategories\Models\Category;
+use VeiligLanceren\LaravelMorphCategories\Support\Traits\HasCategory;
 
 class CategoryableTestModel extends Model
 {

@@ -3,7 +3,7 @@
 namespace VeiligLanceren\LaravelWebshopProduct\Services\Product;
 
 use Illuminate\Database\Eloquent\Collection;
-use VeiligLanceren\LaravelWebshopProduct\Models\Product;
+use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProduct;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Services\Product\IProductService;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Repositories\Product\IProductRepository;
 
@@ -30,7 +30,7 @@ class ProductService implements IProductService
     /**
      * @inheritDoc
      */
-    public function find(int $id): ?Product
+    public function find(int $id): ?WebshopProduct
     {
         return $this->repository->find($id);
     }
@@ -38,7 +38,7 @@ class ProductService implements IProductService
     /**
      * @inheritDoc
      */
-    public function create(array $data): Product
+    public function create(array $data): WebshopProduct
     {
         return $this->repository->create($data);
     }
@@ -46,7 +46,7 @@ class ProductService implements IProductService
     /**
      * @inheritDoc
      */
-    public function update(Product $product, array $data): Product
+    public function update(WebshopProduct $product, array $data): WebshopProduct
     {
         return $this->repository->update($product, $data);
     }
@@ -54,7 +54,7 @@ class ProductService implements IProductService
     /**
      * @inheritDoc
      */
-    public function delete(Product $product): bool
+    public function delete(WebshopProduct $product): bool
     {
         return $this->repository->delete($product);
     }

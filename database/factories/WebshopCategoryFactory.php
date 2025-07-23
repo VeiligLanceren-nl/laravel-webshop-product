@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use VeiligLanceren\LaravelWebshopProduct\Models\Category;
 
-class CategoryFactory extends Factory
+class WebshopCategoryFactory extends Factory
 {
     /**
      * @var string

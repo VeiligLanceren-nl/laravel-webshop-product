@@ -2,12 +2,12 @@
 
 namespace VeiligLanceren\LaravelWebshopProduct\Models;
 
-use Database\Factories\ProductVariantFactory;
 use Illuminate\Database\Eloquent\Model;
+use Database\Factories\WebshopProductImageFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class ProductVariant extends Model
+class WebshopProductImage extends Model
 {
     use HasFactory;
 
@@ -19,9 +19,19 @@ class ProductVariant extends Model
     /**
      * @var string[]
      */
+    protected $fillable = [
+        'product_id',
+        'url',
+        'alt_text',
+        'is_primary',
+        'order',
+    ];
+
+    /**
+     * @var string[]
+     */
     protected $casts = [
-        'price' => 'decimal:2',
-        'options' => 'array',
+        'is_primary' => 'boolean',
     ];
 
     /**
@@ -29,14 +39,14 @@ class ProductVariant extends Model
      */
     public function product(): BelongsTo
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(WebshopProduct::class);
     }
 
     /**
-     * @return ProductVariantFactory
+     * @return WebshopProductImageFactory
      */
-    protected static function newFactory(): ProductVariantFactory
+    protected static function newFactory(): WebshopProductImageFactory
     {
-        return ProductVariantFactory::new();
+        return WebshopProductImageFactory::new();
     }
 }
