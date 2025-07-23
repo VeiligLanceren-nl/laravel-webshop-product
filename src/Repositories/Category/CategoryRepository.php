@@ -4,7 +4,7 @@ namespace VeiligLanceren\LaravelWebshopProduct\Repositories\Category;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
-use VeiligLanceren\LaravelMorphCategories\Models\Category;
+use VeiligLanceren\LaravelMorphCategories\Models\MorphCategory;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Repositories\Category\ICategoryRepository;
 
 class CategoryRepository implements ICategoryRepository
@@ -14,23 +14,23 @@ class CategoryRepository implements ICategoryRepository
      */
     public function all(): Collection
     {
-        return Category::with('children')->get();
+        return MorphCategory::with('children')->get();
     }
 
     /**
      * @inheritDoc
      */
-    public function find(int $id): ?Category
+    public function find(int $id): ?MorphCategory
     {
-        return Category::with('children')->find($id);
+        return MorphCategory::with('children')->find($id);
     }
 
     /**
      * @inheritDoc
      */
-    public function findBySlug(string $slug): ?Category
+    public function findBySlug(string $slug): ?MorphCategory
     {
-        return Category::where('slug', $slug)->first();
+        return MorphCategory::where('slug', $slug)->first();
     }
 
     /**
@@ -38,7 +38,7 @@ class CategoryRepository implements ICategoryRepository
      */
     public function getForModel(Model $model): Collection
     {
-        return $model->categories()->get();
+        return $model->morphCategories()->get();
     }
 
     /**
@@ -47,7 +47,7 @@ class CategoryRepository implements ICategoryRepository
     public function assign(Model $model, array|int $categories, bool $sync = false): void
     {
         $method = $sync ? 'sync' : 'attach';
-        $model->categories()->$method((array) $categories);
+        $model->morphCategories()->$method((array) $categories);
     }
 
     /**
@@ -55,21 +55,21 @@ class CategoryRepository implements ICategoryRepository
      */
     public function detach(Model $model, array|int|null $categories = null): void
     {
-        $model->categories()->detach($categories);
+        $model->morphCategories()->detach($categories);
     }
 
     /**
      * @inheritDoc
      */
-    public function create(array $attributes): Category
+    public function create(array $attributes): MorphCategory
     {
-        return Category::create($attributes);
+        return MorphCategory::create($attributes);
     }
 
     /**
      * @inheritDoc
      */
-    public function update(Category $category, array $attributes): Category
+    public function update(MorphCategory $category, array $attributes): MorphCategory
     {
         $category->update($attributes);
         return $category;
@@ -78,7 +78,7 @@ class CategoryRepository implements ICategoryRepository
     /**
      * @inheritDoc
      */
-    public function delete(Category $category): void
+    public function delete(MorphCategory $category): void
     {
         $category->delete();
     }

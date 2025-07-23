@@ -3,7 +3,7 @@
 namespace VeiligLanceren\LaravelWebshopProduct\Services\Category;
 
 use Illuminate\Support\Collection;
-use VeiligLanceren\LaravelMorphCategories\Models\Category;
+use VeiligLanceren\LaravelMorphCategories\Models\MorphCategory;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Services\Category\ICategoryService;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Repositories\Category\ICategoryRepository;
 
@@ -27,7 +27,7 @@ class CategoryService implements ICategoryService
     /**
      * @inheritDoc
      */
-    public function find(int $id): ?Category
+    public function find(int $id): ?MorphCategory
     {
         return $this->repository->find($id);
     }
@@ -35,7 +35,7 @@ class CategoryService implements ICategoryService
     /**
      * @inheritDoc
      */
-    public function create(array $data): Category
+    public function create(array $data): MorphCategory
     {
         return $this->repository->create($data);
     }
@@ -43,7 +43,7 @@ class CategoryService implements ICategoryService
     /**
      * @inheritDoc
      */
-    public function update(Category $category, array $data): Category
+    public function update(MorphCategory $category, array $data): MorphCategory
     {
         return $this->repository->update($category, $data);
     }
@@ -51,7 +51,7 @@ class CategoryService implements ICategoryService
     /**
      * @inheritDoc
      */
-    public function delete(Category $category): void
+    public function delete(MorphCategory $category): void
     {
         $this->repository->delete($category);
     }

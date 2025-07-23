@@ -4,8 +4,8 @@ namespace Tests;
 
 use Illuminate\Support\InteractsWithTime;
 use Orchestra\Testbench\TestCase as BaseTestCase;
-use VeiligLanceren\LaravelMorphCategories\CategoryServiceProvider;
 use VeiligLanceren\LaravelWebshopProduct\ProductServiceProvider;
+use VeiligLanceren\LaravelMorphCategories\MorphCategoryServiceProvider;
 
 class TestCase extends BaseTestCase
 {
@@ -24,7 +24,7 @@ class TestCase extends BaseTestCase
     {
         return [
             ProductServiceProvider::class,
-            CategoryServiceProvider::class,
+            MorphCategoryServiceProvider::class,
         ];
     }
 

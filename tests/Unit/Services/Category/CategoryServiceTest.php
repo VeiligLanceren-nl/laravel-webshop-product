@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use VeiligLanceren\LaravelMorphCategories\Models\Category;
+use VeiligLanceren\LaravelMorphCategories\Models\MorphCategory;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Services\Category\ICategoryService;
 use VeiligLanceren\LaravelWebshopProduct\Interfaces\Repositories\Category\ICategoryRepository;
 
@@ -18,12 +18,12 @@ it('can create a category', function () {
         'slug' => 'hosting',
     ]);
 
-    expect($category)->toBeInstanceOf(Category::class)
+    expect($category)->toBeInstanceOf(MorphCategory::class)
         ->and($category->name)->toBe('Hosting');
 });
 
 it('can get all categories', function () {
-    Category::factory()->count(3)->create();
+    MorphCategory::factory()->count(3)->create();
 
     $all = $this->service->all();
 
@@ -31,7 +31,7 @@ it('can get all categories', function () {
 });
 
 it('can find a category by id', function () {
-    $category = Category::factory()->create();
+    $category = MorphCategory::factory()->create();
 
     $found = $this->service->find($category->id);
 
@@ -40,7 +40,7 @@ it('can find a category by id', function () {
 });
 
 it('can update a category', function () {
-    $category = Category::factory()->create(['name' => 'Old Name']);
+    $category = MorphCategory::factory()->create(['name' => 'Old Name']);
 
     $updated = $this->service->update($category, ['name' => 'New Name']);
 
@@ -48,12 +48,12 @@ it('can update a category', function () {
 });
 
 it('can delete a category', function () {
-    $category = Category::factory()->create();
+    $category = MorphCategory::factory()->create();
 
     $result = $this->service->delete($category);
 
     expect($result)
         ->toBeNull()
-        ->and(Category::find($category->id))
+        ->and(MorphCategory::find($category->id))
         ->toBeNull();
 });

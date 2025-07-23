@@ -3,7 +3,7 @@
 namespace VeiligLanceren\LaravelWebshopProduct\Interfaces\Services\Category;
 
 use Illuminate\Support\Collection;
-use VeiligLanceren\LaravelMorphCategories\Models\Category;
+use VeiligLanceren\LaravelMorphCategories\Models\MorphCategory;
 
 interface ICategoryService
 {
@@ -14,26 +14,26 @@ interface ICategoryService
 
     /**
      * @param int $id
-     * @return Category|null
+     * @return MorphCategory|null
      */
-    public function find(int $id): ?Category;
+    public function find(int $id): ?MorphCategory;
 
     /**
      * @param array $data
-     * @return Category
+     * @return MorphCategory
      */
-    public function create(array $data): Category;
+    public function create(array $data): MorphCategory;
 
     /**
-     * @param Category $category
+     * @param MorphCategory $category
      * @param array $data
-     * @return Category
+     * @return MorphCategory
      */
-    public function update(Category $category, array $data): Category;
+    public function update(MorphCategory $category, array $data): MorphCategory;
 
     /**
-     * @param Category $category
+     * @param MorphCategory $category
      * @return void
      */
-    public function delete(Category $category): void;
+    public function delete(MorphCategory $category): void;
 }
