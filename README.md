@@ -59,14 +59,14 @@ $products = WebshopProduct::all();
 
 ```php
 // Create
-$product = Product::create([
+$product = WebshopProduct::create([
     'name' => 'Example WebshopProduct',
     'price' => 99.99,
     'sku' => 'example-product'
 ]);
 
 // Read
-$product = Product::find(1);
+$product = WebshopProduct::find(1);
 
 // Update
 $product->update([
@@ -83,51 +83,11 @@ $product->delete();
 
 | Table              | Columns                                                                                  |
 |--------------------|-------------------------------------------------------------------------------------------|
-| `products`         | `id`, `name`, `slug`, `sku`, `price`, `description`, `is_visible`, `order`, timestamps   |
-| `product_images`   | `id`, `product_id`, `url`, `alt_text`, `is_primary`, `order`, timestamps                 |
-| `product_variants` | `id`, `product_id`, `name`, `sku`, `price`, `stock`, `is_default`, `order`, timestamps  |
-| `categories`       | `id`, `name`, `slug`, timestamps                                                         |
-| `categoryables`    | `id`, `category_id`, `categoryable_id`, `categoryable_type`, timestamps                 |
+| `webshop_products` | `id`, `name`, `slug`, `sku`, `price`, `description`, `is_visible`, `order`, timestamps   |
+| `webshop_product_images`   | `id`, `product_id`, `url`, `alt_text`, `is_primary`, `order`, timestamps                 |
+| `webshop_product_variants` | `id`, `product_id`, `name`, `sku`, `price`, `stock`, `is_default`, `order`, timestamps  |
 
 These tables support full product management, media handling, variant selection, and categorization using a polymorphic relationship.
-
----
-
-## HasCategory Trait
-
-To make a model categorizable, use the `HasCategory` trait:
-
-```php
-use VeiligLanceren\LaravelWebshopProduct\Traits\HasCategory;
-
-class MyModel extends Model
-{
-    use HasCategory;
-}
-```
-
-This trait provides a polymorphic `morphToMany` relationship with the `categories` table. Inspired by [Spatie's Sluggable and Taggable packages](https://spatie.be/open-source).
-
-### Available methods
-
-```php
-$model->attachCategories([1, 2]);   // Attach by ID or model
-$model->detachCategories([1]);      // Detach by ID
-$model->syncCategories([1, 3]);     // Replace existing list
-$model->categories;                 // Retrieve related categories
-$model->hasCategory('slug');        // Check by slug
-$model->hasCategory(5);             // Check by ID
-$model->hasCategory($category);     // Check by Category model
-```
-
-By default the Trait sets the route key name, this makes `{category}` usage possible in the routes. This would be `{category:slug}` without.
-
-```php
-public function getRouteKeyName(): string
-{
-    return 'slug';
-}
-```
 
 ---
 
