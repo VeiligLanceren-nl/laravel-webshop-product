@@ -20,7 +20,7 @@ class WebshopProductImage extends Model
      * @var string[]
      */
     protected $fillable = [
-        'product_id',
+        'webshop_product_id',
         'url',
         'alt_text',
         'is_primary',
