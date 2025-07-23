@@ -16,7 +16,7 @@ it('can create a product image', function () {
     $product = WebshopProduct::factory()->create();
 
     $image = $this->service->create([
-        'product_id' => $product->id,
+        'webshop_product_id' => $product->id,
         'url' => 'images/sample.jpg',
         'alt_text' => 'Afbeelding',
         'is_primary' => false,
@@ -67,12 +67,12 @@ it('ensures only one primary image per product', function () {
     $product = WebshopProduct::factory()->create();
 
     $primary1 = WebshopProductImage::factory()->create([
-        'product_id' => $product->id,
+        'webshop_product_id' => $product->id,
         'is_primary' => true,
     ]);
 
     $primary2 = $this->service->create([
-        'product_id' => $product->id,
+        'webshop_product_id' => $product->id,
         'url' => 'images/new.jpg',
         'is_primary' => true,
         'alt_text' => '',
@@ -90,12 +90,12 @@ it('updates primary image correctly when changed', function () {
     $product = WebshopProduct::factory()->create();
 
     $primary1 = WebshopProductImage::factory()->create([
-        'product_id' => $product->id,
+        'webshop_product_id' => $product->id,
         'is_primary' => true,
     ]);
 
     $primary2 = WebshopProductImage::factory()->create([
-        'product_id' => $product->id,
+        'webshop_product_id' => $product->id,
         'is_primary' => false,
     ]);
 
