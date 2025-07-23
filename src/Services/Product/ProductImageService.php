@@ -41,7 +41,7 @@ class ProductImageService implements IProductImageService
     public function create(array $data): WebshopProductImage
     {
         if (!empty($data['is_primary'])) {
-            $this->unsetPrimaryImages($data['product_id']);
+            $this->unsetPrimaryImages($data['webshop_product_id']);
         }
 
         return $this->repository->create($data);
@@ -55,7 +55,7 @@ class ProductImageService implements IProductImageService
     public function update(WebshopProductImage $productImage, array $data): WebshopProductImage
     {
         if (!empty($data['is_primary'])) {
-            $this->unsetPrimaryImages($productImage->product_id, $productImage->id);
+            $this->unsetPrimaryImages($productImage->webshop_product_id, $productImage->id);
         }
 
         $this->repository->update($productImage, $data);

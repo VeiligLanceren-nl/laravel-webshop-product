@@ -15,7 +15,7 @@ it('can create a product image', function () {
     $product = WebshopProduct::factory()->create();
 
     $image = $this->repository->create([
-        'product_id' => $product->id,
+        'webshop_product_id' => $product->id,
         'url' => 'images/product.jpg',
         'alt_text' => 'Sample image',
         'is_primary' => true,
