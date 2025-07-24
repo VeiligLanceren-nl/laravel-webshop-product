@@ -3,6 +3,7 @@
 return [
     'no_images_available' => 'Geen afbeeldingen beschikbaar voor dit product.',
 
+    'home' => 'Home',
     'sale' => 'Aanbieding',
     'out_of_stock' => 'Niet op voorraad',
     'in_stock' => 'Op voorraad',
