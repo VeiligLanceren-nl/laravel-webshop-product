@@ -89,21 +89,17 @@
                             @click="zoomed = !zoomed"
                     >
                         <img
-                                x-ref="mainImage"
-                                src="{{ $product->images->first()->url ?? asset('images/placeholder.jpg') }}"
-                                alt="{{ $product->name }}"
-                                class="w-full h-auto object-contain transition-opacity duration-300"
-                                :class="{
-                                'opacity-100': activeImage === index,
-                                'opacity-0': activeImage !== index
-                            }"
-                                style="aspect-ratio: 1/1;"
-                                loading="eager"
-                                x-init="zoomImageSize = {
+                            x-ref="mainImage"
+                            :src="activeImage < {{ $product->images->count() }} ? '{{ $product->images->get(0)?->url }}'.replace(/0/, activeImage) : '{{ asset('images/placeholder.jpg') }}'"
+                            alt="{{ $product->name }}"
+                            class="w-full h-auto object-contain transition-opacity duration-300"
+                            style="aspect-ratio: 1/1;"
+                            loading="eager"
+                            x-init="zoomImageSize = {
                                 width: $el.naturalWidth,
                                 height: $el.naturalHeight
                             }"
-                                :style="zoomed ? {
+                            :style="zoomed ? {
                                 'transform': 'scale(2)',
                                 'transform-origin': `${zoomPosition.x}% ${zoomPosition.y}%`
                             } : ''"
@@ -212,27 +208,10 @@
                 {{-- Add to Cart --}}
                 <div class="mb-8">
                     <div class="flex items-center gap-4">
-                        <div class="flex items-center border rounded-md overflow-hidden">
-                            <button
-                                    class="px-3 py-2 bg-gray-100 hover:bg-gray-200 transition-colors"
-                                    @click="quantity > 1 ? quantity-- : null"
-                            >
-                                -
-                            </button>
-                            <input
-                                    type="number"
-                                    x-model="quantity"
-                                    min="1"
-                                    max="{{ $product->stock }}"
-                                    class="w-12 text-center border-0 focus:ring-0"
-                            />
-                            <button
-                                    class="px-3 py-2 bg-gray-100 hover:bg-gray-200 transition-colors"
-                                    @click="quantity < {{ $product->stock }} ? quantity++ : null"
-                            >
-                                +
-                            </button>
-                        </div>
+                        <x-webshop-product::product-amount-input :quantity="2"
+                                                                 :max="$product->stock"
+                                                                 input-name="product_quantity"
+                        />
 
                         <button
                                 class="flex-1 bg-primary hover:bg-primary-dark text-white font-medium py-3 px-6 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
