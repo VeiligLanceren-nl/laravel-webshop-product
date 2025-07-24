@@ -34,18 +34,11 @@
                             @change="window.location.href = updateQueryStringParam('sort', currentSort)"
                             class="border-gray-300 rounded-md text-sm focus:border-primary focus:ring-primary"
                     >
-                        <option value="price_asc" {{ request('sort') === 'price_asc' ? 'selected' : '' }}>
-                            @lang('webshop-product::webshop-product.price_low_high')
-                        </option>
-                        <option value="price_desc" {{ request('sort') === 'price_desc' ? 'selected' : '' }}>
-                            @lang('webshop-product::webshop-product.price_high_low')
-                        </option>
-                        <option value="newest" {{ request('sort') === 'newest' ? 'selected' : '' }}>
-                            @lang('webshop-product::webshop-product.newest')
-                        </option>
-                        <option value="popular" {{ request('sort') === 'popular' ? 'selected' : '' }}>
-                            @lang('webshop-product::webshop-product.popular')
-                        </option>
+                        @foreach($sortOptions as $value => $label)
+                            <option value="{{ $value }}" {{ request('sort', 'newest') == $value ? 'selected' : '' }}>
+                                {{ $label }}
+                            </option>
+                        @endforeach
                     </select>
                 </div>
             @endif
