@@ -3,6 +3,7 @@
 return [
     'no_images_available' => 'No images available for this product.',
 
+    'home' => 'Home',
     'sale' => 'Sale',
     'out_of_stock' => 'Out of Stock',
     'in_stock' => 'In stock',
