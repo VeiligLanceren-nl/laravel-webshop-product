@@ -27,6 +27,7 @@ class WebshopProductFactory extends Factory
             'description' => $this->faker->sentence(),
             'price' => $this->faker->randomFloat(2, 5, 500),
             'active' => true,
+            'featured' => $this->faker->boolean(),
             'stock' => $this->faker->numberBetween(0, 100),
             'weight' => $this->faker->randomFloat(2, 0.1, 10),
             'dimensions' => [

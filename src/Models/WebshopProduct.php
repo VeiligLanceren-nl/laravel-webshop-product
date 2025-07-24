@@ -33,6 +33,7 @@ class WebshopProduct extends Model
         'active',
         'stock',
         'weight',
+        'featured',
         'dimensions',
     ];
 
@@ -44,6 +45,7 @@ class WebshopProduct extends Model
         'weight' => 'decimal:2',
         'dimensions' => 'array',
         'active' => 'boolean',
+        'featured' => 'boolean',
     ];
 
     /**
