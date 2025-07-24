@@ -23,7 +23,7 @@
                             <a href="{{ route('home') }}" class="hover:text-blue-400">@lang('webshop-product::webshop-product.home')</a>
                         @else
                             @lang('webshop-product::webshop-product.home')
-                                @endif
+                        @endif
                     </li>
                     <li>/</li>
                     @if($product->morphCategories->isNotEmpty())
@@ -222,7 +222,7 @@
                             <div>
                                 <span class="font-medium text-gray-700">@lang('webshop-product::webshop-product.category'):</span>
                                 <span class="text-gray-600 ml-2">
-                                    {{ $product->morphCategories->first()->name ?? @lang('webshop-product::webshop-product.uncategorized') }}
+                                    {{ $product->morphCategories->first()->name ?? __('webshop-product::webshop-product.uncategorized') }}
                                 </span>
                             </div>
                         </div>
