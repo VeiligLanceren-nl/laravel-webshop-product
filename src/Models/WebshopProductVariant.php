@@ -29,7 +29,7 @@ class WebshopProductVariant extends Model
      */
     public function product(): BelongsTo
     {
-        return $this->belongsTo(WebshopProduct::class);
+        return $this->belongsTo(WebshopProduct::class, 'webshop_product_id', 'id');
     }
 
     /**
