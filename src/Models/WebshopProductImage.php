@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Database\Factories\WebshopProductImageFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Storage;
 
 class WebshopProductImage extends Model
 {
@@ -40,6 +41,33 @@ class WebshopProductImage extends Model
     public function product(): BelongsTo
     {
         return $this->belongsTo(WebshopProduct::class, 'webshop_product_id', 'id');
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function getImageAttribute($value): string
+    {
+        if (! $value) {
+            return asset(config('webshop-product.images.placeholder'));
+        }
+
+        if (preg_match('/^https?:\/\//', $value)) {
+            return $value;
+        }
+
+        $disk = config('webshop-product.images.disk', 'public');
+
+        if (Storage::disk($disk)->exists($value)) {
+            return Storage::disk($disk)->url($value);
+        }
+
+        $prefix = config('webshop-product.images.storage_prefix', '/storage/');
+
+        return (config('webshop-product.images.use_full_url', true))
+            ? asset($prefix . ltrim($value, '/'))
+            : $prefix . ltrim($value, '/');
     }
 
     /**

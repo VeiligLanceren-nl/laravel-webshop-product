@@ -104,7 +104,7 @@
                                 <button @click="activeImage = {{ $index }}"
                                         class="border rounded-md overflow-hidden hover:border-blue-400 transition-all"
                                         :class="{ 'border-blue-400': activeImage === {{ $index }} }">
-                                    <img src="{{ $image->url }}"
+                                    <img src="{{ $image->image }}"
                                          alt="{{ $product->name }} - thumbnail {{ $index + 1 }}"
                                          class="w-full h-20 object-cover"
                                          loading="lazy"
