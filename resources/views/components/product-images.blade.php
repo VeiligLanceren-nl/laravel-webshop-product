@@ -148,7 +148,7 @@
                                 aria-label="View image {{ $index + 1 }}"
                         >
                             <img
-                                    src="{{ $image->url }}"
+                                    src="{{ $image->image }}"
                                     alt="{{ $image->alt ?? $product->name }} - thumbnail {{ $index + 1 }}"
                                     class="h-20 w-20 object-cover"
                                     loading="lazy"

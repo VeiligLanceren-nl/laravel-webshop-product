@@ -95,7 +95,7 @@
                 <a href="{{ route('product.show', $product->slug) }}" class="block h-full">
                     <div class="relative overflow-hidden rounded-md mb-3 aspect-square">
                         <img
-                                src="{{ $product->images->first()->url ?? asset('images/placeholder.jpg') }}"
+                                src="{{ $product->images->first()->image ?? asset('images/placeholder.jpg') }}"
                                 alt="{{ $product->name }}"
                                 class="{{ $imageHeight }} w-full object-cover transition-transform duration-300 group-hover/card:scale-105"
                                 loading="lazy"
