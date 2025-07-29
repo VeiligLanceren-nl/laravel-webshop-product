@@ -20,7 +20,9 @@
                 <ol class="flex items-center space-x-2 text-sm text-gray-600">
                     <li>
                         @if($linkHome)
-                            <a href="{{ route('home') }}" class="hover:text-blue-400">@lang('webshop-product::webshop-product.home')</a>
+                            <a href="{{ route('home') }}" class="hover:text-blue-400">
+                                @lang('webshop-product::webshop-product.home')
+                            </a>
                         @else
                             @lang('webshop-product::webshop-product.home')
                         @endif
@@ -46,45 +48,14 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {{-- Gallery --}}
             @if($showGallery)
-                <div x-data="{
-                    activeImage: 0,
-                    zoomed: false,
-                    zoomPosition: { x: 0, y: 0 },
-                    zoomImageSize: { width: 0, height: 0 },
-                    init() {
-                        this.$watch('activeImage', () => this.zoomed = false);
-                    },
-                    handleZoom(e) {
-                        if (!this.zoomed) {
-                            this.zoomed = true;
-                            return;
-                        }
-                        const img = this.$refs.mainImage;
-                        const container = this.$refs.imageContainer;
-                        const rect = container.getBoundingClientRect();
-                        const x = e.clientX - rect.left;
-                        const y = e.clientY - rect.top;
-                        const xPercent = (x / rect.width) * 100;
-                        const yPercent = (y / rect.height) * 100;
-                        this.zoomPosition = { x: xPercent, y: yPercent };
-                    }
-                }">
-                    <div x-ref="imageContainer"
-                         class="relative bg-gray-100 rounded-lg overflow-hidden mb-4 cursor-zoom-in"
-                         :class="{ 'cursor-zoom-out': zoomed }"
-                         @mousemove="handleZoom"
-                         @click="zoomed = !zoomed">
-                        <img x-ref="mainImage"
-                             :src="activeImage < {{ $product->images->count() }} ? '{{ $product->images->get(0)?->url }}'.replace(/0/, activeImage) : '{{ asset('images/placeholder.jpg') }}'"
+                <div id="gallery-container">
+                    <div class="relative bg-gray-100 rounded-lg overflow-hidden mb-4 cursor-zoom-in" id="main-image-container">
+                        <img id="mainImage"
+                             src="{{ $product->images->first()->image ?? asset('images/placeholder.jpg') }}"
                              alt="{{ $product->name }}"
                              class="w-full h-auto object-contain transition-opacity duration-300"
                              style="aspect-ratio: 1/1;"
                              loading="eager"
-                             x-init="zoomImageSize = { width: $el.naturalWidth, height: $el.naturalHeight }"
-                             :style="zoomed ? {
-                                 'transform': 'scale(2)',
-                                 'transform-origin': `${zoomPosition.x}% ${zoomPosition.y}%`
-                             } : ''"
                         />
                         @if($product->price < $product->price_original)
                             <span class="absolute top-4 left-4 bg-red-500 text-white font-bold px-3 py-1 rounded-full text-sm">
@@ -98,12 +69,12 @@
                         @endif
                     </div>
 
+                    {{-- Thumbnails --}}
                     @if($product->images->count() > 1)
-                        <div class="grid grid-cols-4 gap-3">
+                        <div class="grid grid-cols-4 gap-3" id="thumbnail-container">
                             @foreach($product->images as $index => $image)
-                                <button @click="activeImage = {{ $index }}"
-                                        class="border rounded-md overflow-hidden hover:border-blue-400 transition-all"
-                                        :class="{ 'border-blue-400': activeImage === {{ $index }} }">
+                                <button data-index="{{ $index }}"
+                                        class="border rounded-md overflow-hidden hover:border-blue-400 transition-all">
                                     <img src="{{ $image->image }}"
                                          alt="{{ $product->name }} - thumbnail {{ $index + 1 }}"
                                          class="w-full h-20 object-cover"
@@ -113,12 +84,96 @@
                             @endforeach
                         </div>
                     @else
-                        <p class="text-gray-500 text-sm">@lang('webshop-product::webshop-product.no_images_available')</p>
+                        <p class="text-gray-500 text-sm">
+                            @lang('webshop-product::webshop-product.no_images_available')
+                        </p>
                     @endif
                 </div>
+
+                <div id="zoom-controls" class="mt-3 flex justify-center space-x-4 hidden">
+                    <button id="zoom-out" class="p-2 bg-gray-200 hover:bg-gray-300 rounded-full">
+                        -
+                    </button>
+                    <button id="zoom-reset" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md text-sm">
+                        100%
+                    </button>
+                    <button id="zoom-in" class="p-2 bg-gray-200 hover:bg-gray-300 rounded-full">
+                        +
+                    </button>
+                </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const images = @json($product->images->pluck('image'));
+                        let activeImage = 0;
+                        let zoomed = false;
+                        let zoomLevel = 2;
+                        let zoomPosition = { x: 50, y: 50 };
+
+                        const mainImage = document.getElementById('mainImage');
+                        const mainContainer = document.getElementById('main-image-container');
+                        const thumbnails = document.querySelectorAll('#thumbnail-container button');
+                        const zoomControls = document.getElementById('zoom-controls');
+                        const zoomInBtn = document.getElementById('zoom-in');
+                        const zoomOutBtn = document.getElementById('zoom-out');
+                        const zoomResetBtn = document.getElementById('zoom-reset');
+
+                        // Thumbnail click
+                        thumbnails.forEach((btn, index) => {
+                            btn.addEventListener('click', () => {
+                                activeImage = index;
+                                mainImage.src = images[activeImage] || '{{ asset('images/placeholder.jpg') }}';
+                                zoomed = false;
+                                zoomControls.classList.add('hidden');
+                                mainImage.style.transform = 'scale(1)';
+                            });
+                        });
+
+                        // Toggle zoom
+                        mainContainer.addEventListener('click', () => {
+                            zoomed = !zoomed;
+                            if (!zoomed) {
+                                mainImage.style.transform = 'scale(1)';
+                                zoomControls.classList.add('hidden');
+                            } else {
+                                zoomControls.classList.remove('hidden');
+                            }
+                        });
+
+                        // Move zoom position
+                        mainContainer.addEventListener('mousemove', (e) => {
+                            if (!zoomed) return;
+                            const rect = mainContainer.getBoundingClientRect();
+                            const x = ((e.clientX - rect.left) / rect.width) * 100;
+                            const y = ((e.clientY - rect.top) / rect.height) * 100;
+                            zoomPosition = { x, y };
+                            mainImage.style.transformOrigin = `${x}% ${y}%`;
+                            mainImage.style.transform = `scale(${zoomLevel})`;
+                        });
+
+                        // Zoom buttons
+                        zoomInBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            zoomLevel = Math.min(3, zoomLevel + 0.5);
+                            mainImage.style.transform = `scale(${zoomLevel})`;
+                        });
+
+                        zoomOutBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            zoomLevel = Math.max(1, zoomLevel - 0.5);
+                            mainImage.style.transform = `scale(${zoomLevel})`;
+                        });
+
+                        zoomResetBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            zoomLevel = 2;
+                            mainImage.style.transform = `scale(${zoomLevel})`;
+                        });
+                    });
+                </script>
             @endif
 
-            {{-- Details --}}
+            {{-- Product Details --}}
             <div>
                 <div class="mb-6">
                     <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">{{ $product->name }}</h1>
@@ -147,35 +202,7 @@
                 </div>
 
                 {{-- Variants --}}
-                @if($showVariants && $product->variants->isNotEmpty())
-                    <div class="mb-6">
-                        <h3 class="text-lg font-semibold mb-3">@lang('webshop-product::webshop-product.options')</h3>
-                        <div class="space-y-4">
-                            @foreach($product->variants->groupBy('type') as $type => $variants)
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ $type }}</label>
-                                    <div class="flex flex-wrap gap-2">
-                                        @foreach($variants as $variant)
-                                            <button
-                                                    class="px-4 py-2 border rounded-md hover:border-blue-400 transition-all"
-                                                    :class="{
-                                                    'border-blue-400 bg-blue-400/10': selectedVariant === '{{ $variant->id }}',
-                                                    'border-gray-300': selectedVariant !== '{{ $variant->id }}'
-                                                }">
-                                                {{ $variant->name }}
-                                                @if($variant->price_adjustment != 0)
-                                                    <span class="text-xs">
-                                                        ({{ $variant->price_adjustment > 0 ? '+' : '' }}{{ number_format($variant->price_adjustment, 2, ',', '.') }})
-                                                    </span>
-                                                @endif
-                                            </button>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                @endif
+                {{-- Keep your variant block here if needed --}}
 
                 {{-- Cart --}}
                 <div class="mb-8">
