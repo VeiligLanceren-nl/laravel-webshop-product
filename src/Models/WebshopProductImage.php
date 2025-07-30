@@ -44,30 +44,30 @@ class WebshopProductImage extends Model
     }
 
     /**
-     * @param $value
      * @return string
      */
-    public function getImageAttribute($value): string
+    public function getImageAttribute(): string
     {
-        if (! $value) {
+        if (!$this->getAttribute('url')) {
             return asset(config('webshop-product.images.placeholder'));
         }
 
-        if (preg_match('/^https?:\/\//', $value)) {
-            return $value;
+        if (preg_match('/^https?:\/\//', $this->getAttribute('url'))) {
+            return $this->getAttribute('url');
         }
 
         $disk = config('webshop-product.images.disk', 'public');
 
-        if (Storage::disk($disk)->exists($value)) {
-            return Storage::disk($disk)->url($value);
+        if (Storage::disk($disk)->exists($this->getAttribute('url'))) {
+            return Storage::disk($disk)
+                ->url($this->getAttribute('url'));
         }
 
         $prefix = config('webshop-product.images.storage_prefix', '/storage/');
 
         return (config('webshop-product.images.use_full_url', true))
-            ? asset($prefix . ltrim($value, '/'))
-            : $prefix . ltrim($value, '/');
+            ? asset($prefix . ltrim($this->getAttribute('url'), '/'))
+            : $prefix . ltrim($this->getAttribute('url'), '/');
     }
 
     /**
