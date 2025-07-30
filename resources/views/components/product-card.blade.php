@@ -14,7 +14,7 @@
         <a href="{{ route('product.show', $product->slug) }}" class="block">
             <div class="{{ $aspectRatio }} bg-gray-50 relative overflow-hidden">
                 <img
-                        src="{{ $product->images->first()->url ?? asset('images/placeholder.jpg') }}"
+                        src="{{ $product->images->first()->image ?? asset('images/placeholder.jpg') }}"
                         alt="{{ $product->name }}"
                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 {{ $imageSize }}"
                         loading="lazy"
