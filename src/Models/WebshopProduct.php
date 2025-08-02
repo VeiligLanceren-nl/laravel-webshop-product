@@ -28,13 +28,15 @@ class WebshopProduct extends Model
         'sku',
         'name',
         'slug',
-        'description',
         'price',
         'active',
         'stock',
         'weight',
         'featured',
         'dimensions',
+        'meta_title',
+        'description',
+        'meta_description',
     ];
 
     /**
