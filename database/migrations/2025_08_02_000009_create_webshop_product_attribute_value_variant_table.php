@@ -9,12 +9,24 @@ return new class extends Migration {
     {
         Schema::create('webshop_product_attribute_value_variant', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('webshop_product_variant_id')
-                ->constrained('webshop_product_variants')
+
+            $table->unsignedBigInteger('webshop_product_variant_id');
+            $table->unsignedBigInteger('webshop_product_attribute_value_id');
+
+            $table->foreign('webshop_product_variant_id', 'wpav_variant_fk')
+                ->references('id')
+                ->on('webshop_product_variants')
                 ->cascadeOnDelete();
-            $table->foreignId('webshop_product_attribute_value_id')
-                ->constrained('webshop_product_attribute_values')
+
+            $table->foreign('webshop_product_attribute_value_id', 'wpav_value_fk')
+                ->references('id')
+                ->on('webshop_product_attribute_values')
                 ->cascadeOnDelete();
+
+            $table->unique(
+                ['webshop_product_variant_id', 'webshop_product_attribute_value_id'],
+                'wpav_variant_value_unique'
+            );
         });
     }
 
