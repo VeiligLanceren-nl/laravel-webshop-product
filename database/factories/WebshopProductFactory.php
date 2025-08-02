@@ -35,6 +35,8 @@ class WebshopProductFactory extends Factory
                 'width'  => $this->faker->randomFloat(1, 10, 100),
                 'height' => $this->faker->randomFloat(1, 10, 100),
             ],
+            'meta_title' => $this->faker->sentence(),
+            'meta_description' => $this->faker->sentence(20),
         ];
     }
 }
