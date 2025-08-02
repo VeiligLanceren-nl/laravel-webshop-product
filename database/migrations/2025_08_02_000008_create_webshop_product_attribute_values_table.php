@@ -9,9 +9,14 @@ return new class extends Migration {
     {
         Schema::create('webshop_product_attribute_values', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('webshop_product_attribute_id')
-                ->constrained('webshop_product_attributes')
+
+            $table->unsignedBigInteger('webshop_product_attribute_id');
+
+            $table->foreign('webshop_product_attribute_id', 'wpav_attribute_fk')
+                ->references('id')
+                ->on('webshop_product_attributes')
                 ->cascadeOnDelete();
+
             $table->string('value'); // e.g. Red, XL
             $table->timestamps();
         });
