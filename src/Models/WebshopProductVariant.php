@@ -2,10 +2,11 @@
 
 namespace VeiligLanceren\LaravelWebshopProduct\Models;
 
-use Database\Factories\WebshopProductVariantFactory;
 use Illuminate\Database\Eloquent\Model;
+use Database\Factories\WebshopProductVariantFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class WebshopProductVariant extends Model
 {
@@ -31,6 +32,20 @@ class WebshopProductVariant extends Model
     {
         return $this->belongsTo(WebshopProduct::class, 'webshop_product_id', 'id');
     }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function attributeValues(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            WebshopProductAttributeValue::class,
+            'webshop_product_attribute_value_variant',
+            'webshop_product_variant_id',
+            'webshop_product_attribute_value_id'
+        );
+    }
+
 
     /**
      * @return WebshopProductVariantFactory

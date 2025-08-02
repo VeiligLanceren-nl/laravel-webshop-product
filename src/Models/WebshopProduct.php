@@ -67,9 +67,9 @@ class WebshopProduct extends Model
     }
 
     /**
-     * @return string
+     * @return WebshopProductImage|null
      */
-    public function getPrimaryImageAttribute(): string
+    public function getPrimaryImageAttribute(): ?WebshopProductImage
     {
         return $this->images()
             ->where('is_primary', true)
