@@ -1,11 +1,12 @@
 <?php
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProduct;
-use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProductVariant;
-use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProductImage;
-use VeiligLanceren\LaravelWebshopProduct\Facades\SlugConfig;
 use Spatie\Sluggable\SlugOptions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use VeiligLanceren\LaravelWebshopProduct\Facades\SlugConfig;
+use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProduct;
+use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProductImage;
+use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProductOption;
+use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProductVariant;
 
 uses(RefreshDatabase::class);
 
@@ -93,4 +94,59 @@ it('uses slug options from SlugConfig facade', function () {
     $options = $product->getSlugOptions();
 
     expect($options)->toBeInstanceOf(SlugOptions::class);
+});
+
+it('has many options', function () {
+    $product = WebshopProduct::factory()->create();
+
+    $option = WebshopProductOption::factory()->create([
+        'webshop_product_id' => $product->id,
+        'name' => 'Printing',
+        'additional_price' => 25.00,
+    ]);
+
+    expect($product->options)->toHaveCount(1)
+        ->and($product->options->first())->toBeInstanceOf(WebshopProductOption::class)
+        ->and($product->options->first()->name)->toEqual('Printing');
+});
+
+it('calculates total price with selected options', function () {
+    $product = WebshopProduct::factory()->create(['price' => 100.00]);
+
+    $options = WebshopProductOption::factory()->count(2)->create([
+        'webshop_product_id' => $product->id,
+    ]);
+
+    $selectedIds = $options->pluck('id')->toArray();
+    $totalPrice = $product->totalPriceWithOptions($selectedIds);
+
+    expect($totalPrice)->toBe(
+        $product->price + $options->sum('additional_price')
+    );
+});
+
+it('returns base price if no options are selected', function () {
+    $product = WebshopProduct::factory()->create(['price' => 199.99]);
+
+    $totalPrice = $product->totalPriceWithOptions([]);
+
+    expect($totalPrice)->toBe(199.99);
+});
+
+it('stores and retrieves OG and X meta fields', function () {
+    $product = WebshopProduct::factory()->create([
+        'og_title' => 'OG Product Title',
+        'og_description' => 'OG Product Description',
+        'og_image' => '/images/og-test.jpg',
+        'x_meta_title' => 'X Product Title',
+        'x_meta_description' => 'X Product Description',
+        'x_meta_image' => '/images/x-test.jpg',
+    ]);
+
+    expect($product->og_title)->toEqual('OG Product Title')
+        ->and($product->og_description)->toEqual('OG Product Description')
+        ->and($product->og_image)->toEqual('/images/og-test.jpg')
+        ->and($product->x_meta_title)->toEqual('X Product Title')
+        ->and($product->x_meta_description)->toEqual('X Product Description')
+        ->and($product->x_meta_image)->toEqual('/images/x-test.jpg');
 });

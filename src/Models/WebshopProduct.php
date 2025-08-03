@@ -29,14 +29,20 @@ class WebshopProduct extends Model
         'name',
         'slug',
         'price',
-        'active',
         'stock',
+        'active',
         'weight',
+        'og_title',
         'featured',
+        'og_image',
         'dimensions',
         'meta_title',
         'description',
+        'x_meta_title',
+        'x_meta_image',
+        'og_description',
         'meta_description',
+        'x_meta_description',
     ];
 
     /**
@@ -66,6 +72,14 @@ class WebshopProduct extends Model
         return $this
             ->hasMany(WebshopProductImage::class)
             ->orderBy('order');
+    }
+
+    /**
+     * @return HasMany<WebshopProductOption>
+     */
+    public function options()
+    {
+        return $this->hasMany(WebshopProductOption::class, 'webshop_product_id');
     }
 
     /**
@@ -127,6 +141,18 @@ class WebshopProduct extends Model
     public function setHeightAttribute($value): void
     {
         $this->dimensions = array_merge($this->dimensions ?? [], ['height' => (float) $value]);
+    }
+
+    /**
+     * @param array $selectedOptionIds
+     * @return float
+     */
+    public function totalPriceWithOptions(array $selectedOptionIds = []): float
+    {
+        $basePrice = $this->price;
+        $options = $this->options()->whereIn('id', $selectedOptionIds)->get();
+
+        return $basePrice + $options->sum('additional_price');
     }
 
     /**
