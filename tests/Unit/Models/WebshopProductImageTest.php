@@ -4,6 +4,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Config;
 use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProduct;
+use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProductAttributeValue;
 use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProductImage;
 
 uses(RefreshDatabase::class);
@@ -57,4 +58,23 @@ it('returns relative prefixed url when file does not exist and use_full_url = fa
     $image = WebshopProductImage::factory()->create(['url' => 'missing.jpg']);
 
     expect($image->image)->toEqual('/storage/missing.jpg');
+});
+
+it('can belong to a product attribute value', function () {
+    $attributeValue = WebshopProductAttributeValue::factory()->create();
+    $image = WebshopProductImage::factory()->create([
+        'webshop_product_attribute_value_id' => $attributeValue->id,
+    ]);
+
+    expect($image->attributeValue)
+        ->toBeInstanceOf(WebshopProductAttributeValue::class)
+        ->id->toEqual($attributeValue->id);
+});
+
+it('returns null when no attribute value is associated', function () {
+    $image = WebshopProductImage::factory()->create([
+        'webshop_product_attribute_value_id' => null,
+    ]);
+
+    expect($image->attributeValue)->toBeNull();
 });

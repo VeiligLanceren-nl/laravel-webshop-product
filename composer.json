@@ -1,7 +1,7 @@
 {
     "name": "veiliglanceren/laravel-webshop-product",
     "description": "Collection of resources for implementing a product structure in Laravel e-commerce projects",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "type": "library",
     "license": "MIT",
     "require": {

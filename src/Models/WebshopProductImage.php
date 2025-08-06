@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Database\Factories\WebshopProductImageFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Storage;
 
 class WebshopProductImage extends Model
@@ -21,11 +22,12 @@ class WebshopProductImage extends Model
      * @var string[]
      */
     protected $fillable = [
-        'webshop_product_id',
         'url',
+        'order',
         'alt_text',
         'is_primary',
-        'order',
+        'webshop_product_id',
+        'webshop_product_attribute_value_id',
     ];
 
     /**
@@ -41,6 +43,27 @@ class WebshopProductImage extends Model
     public function product(): BelongsTo
     {
         return $this->belongsTo(WebshopProduct::class, 'webshop_product_id', 'id');
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function variants(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            WebshopProductVariant::class,
+            'webshop_product_attribute_value_variant',
+            'webshop_product_attribute_value_id',
+            'webshop_product_variant_id'
+        );
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function attributeValue(): BelongsTo
+    {
+        return $this->belongsTo(WebshopProductAttributeValue::class, 'webshop_product_attribute_value_id');
     }
 
     /**
