@@ -22,8 +22,7 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('webshop_product_images', function (Blueprint $table) {
-            $table->dropForeign(['webshop_product_attribute_value_id']);
-            $table->dropColumn('webshop_product_attribute_value_id');
+            $table->dropConstrainedForeignId('webshop_product_attribute_value_id');
         });
     }
 };
