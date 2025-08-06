@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProductImage;
 use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProductVariant;
 use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProductAttribute;
 use VeiligLanceren\LaravelWebshopProduct\Models\WebshopProductAttributeValue;
@@ -43,4 +44,33 @@ it('supports multiple variants', function () {
     $value->variants()->sync($variants->pluck('id'));
 
     expect($value->variants)->toHaveCount(2);
+});
+
+it('can have images associated with an attribute value', function () {
+    $value = WebshopProductAttributeValue::factory()->create();
+    $images = WebshopProductImage::factory()->count(2)->create([
+        'webshop_product_attribute_value_id' => $value->id,
+    ]);
+
+    expect($value->images)->toHaveCount(2)
+        ->each->toBeInstanceOf(WebshopProductImage::class)
+        ->and($value->images->first()->webshop_product_attribute_value_id)
+        ->toEqual($value->id);
+});
+
+it('returns the attribute value from an image', function () {
+    $value = WebshopProductAttributeValue::factory()->create();
+    $image = WebshopProductImage::factory()->create([
+        'webshop_product_attribute_value_id' => $value->id,
+    ]);
+
+    expect($image->attributeValue)
+        ->toBeInstanceOf(WebshopProductAttributeValue::class)
+        ->id->toEqual($value->id);
+});
+
+it('returns empty collection when no images are associated', function () {
+    $value = WebshopProductAttributeValue::factory()->create();
+
+    expect($value->images)->toBeEmpty();
 });
