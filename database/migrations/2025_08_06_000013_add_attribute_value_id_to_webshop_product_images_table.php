@@ -18,16 +18,4 @@ return new class extends Migration {
                 ->nullOnDelete();
         });
     }
-
-    public function down(): void
-    {
-        Schema::table('webshop_product_images', function (Blueprint $table) {
-            if (Schema::getConnection()->getDriverName() === 'sqlite') {
-                $table->dropColumn('webshop_product_attribute_value_id');
-            } else {
-                $table->dropForeign('fk_image_attr_value');
-                $table->dropColumn('webshop_product_attribute_value_id');
-            }
-        });
-    }
 };
